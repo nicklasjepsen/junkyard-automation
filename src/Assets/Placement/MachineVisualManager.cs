@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using JunkyardAutomation.Core;
+using JunkyardAutomation.Data;
 using JunkyardAutomation.Simulation;
 
 namespace JunkyardAutomation.Placement
@@ -14,7 +15,7 @@ namespace JunkyardAutomation.Placement
         public static MachineVisualManager Instance { get; private set; }
 
         [Header("Visual Settings")]
-        [SerializeField] private Color conveyorColor = new Color(0.4f, 0.4f, 0.5f, 1f);
+        [SerializeField] private Color defaultMachineColor = new Color(0.4f, 0.4f, 0.5f, 1f);
         [SerializeField] private Color arrowColor = new Color(0.9f, 0.9f, 0.3f, 1f);
         [SerializeField] private float arrowSize = 0.25f;
 
@@ -59,15 +60,23 @@ namespace JunkyardAutomation.Placement
 
         private GameObject CreateConveyorVisual(PlacedMachine machine)
         {
-            GameObject obj = new GameObject($"Conveyor_{machine.Id.Substring(0, 8)}");
+            GameObject obj = new GameObject($"Machine_{machine.MachineTypeId}_{machine.Id.Substring(0, 8)}");
             obj.transform.parent = transform;
 
             // Add mesh components
             MeshFilter meshFilter = obj.AddComponent<MeshFilter>();
             MeshRenderer meshRenderer = obj.AddComponent<MeshRenderer>();
 
+            // Get color from registry
+            Color machineColor = defaultMachineColor;
+            var definition = ContentRegistry.GetMachine(machine.MachineTypeId);
+            if (definition != null)
+            {
+                machineColor = definition.GetColor();
+            }
+
             // Create mesh
-            Mesh mesh = CreateConveyorMesh(machine.Position, machine.Rotation);
+            Mesh mesh = CreateConveyorMesh(machine.Position, machine.Rotation, machineColor);
             meshFilter.mesh = mesh;
 
             // Create material
@@ -79,7 +88,7 @@ namespace JunkyardAutomation.Placement
             return obj;
         }
 
-        private Mesh CreateConveyorMesh(Vector2Int position, int rotation)
+        private Mesh CreateConveyorMesh(Vector2Int position, int rotation, Color machineColor)
         {
             if (GridSystem.Instance == null) return new Mesh();
 
@@ -120,7 +129,7 @@ namespace JunkyardAutomation.Placement
             triangles[6] = 4; triangles[7] = 5; triangles[8] = 6;
 
             // Colors
-            for (int i = 0; i < 4; i++) colors[i] = conveyorColor;
+            for (int i = 0; i < 4; i++) colors[i] = machineColor;
             for (int i = 4; i < 7; i++) colors[i] = arrowColor;
 
             mesh.vertices = vertices;

@@ -1,0 +1,67 @@
+{
+  "items": [
+    {
+      "id": "ScrapFerrous",
+      "displayName": "Ferrous Scrap",
+      "category": "scrap",
+      "color": "#8B7355",
+      "sellPrice": 1
+    },
+    {
+      "id": "ScrapNonFerrous",
+      "displayName": "Non-Ferrous Scrap",
+      "category": "scrap",
+      "color": "#CD853F",
+      "sellPrice": 2
+    },
+    {
+      "id": "ScrapPlastic",
+      "displayName": "Plastic Scrap",
+      "category": "scrap",
+      "color": "#4169E1",
+      "sellPrice": 1
+    },
+    {
+      "id": "ScrapTrash",
+      "displayName": "Trash",
+      "category": "scrap",
+      "color": "#556B2F",
+      "sellPrice": 0
+    },
+    {
+      "id": "ShreddedFerrous",
+      "displayName": "Shredded Ferrous",
+      "category": "intermediate",
+      "color": "#A0522D",
+      "sellPrice": 3
+    },
+    {
+      "id": "ShreddedNonFerrous",
+      "displayName": "Shredded Non-Ferrous",
+      "category": "intermediate",
+      "color": "#DAA520",
+      "sellPrice": 5
+    },
+    {
+      "id": "SteelIngot",
+      "displayName": "Steel Ingot",
+      "category": "product",
+      "color": "#708090",
+      "sellPrice": 10
+    },
+    {
+      "id": "CopperChunk",
+      "displayName": "Copper Chunk",
+      "category": "product",
+      "color": "#B87333",
+      "sellPrice": 15
+    },
+    {
+      "id": "PlasticPellets",
+      "displayName": "Plastic Pellets",
+      "category": "product",
+      "color": "#6495ED",
+      "sellPrice": 8
+    }
+  ]
+}

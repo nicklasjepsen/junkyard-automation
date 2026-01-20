@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using JunkyardAutomation.Core;
+using JunkyardAutomation.Data;
 using JunkyardAutomation.Simulation;
 
 namespace JunkyardAutomation.Placement
@@ -118,12 +119,15 @@ namespace JunkyardAutomation.Placement
             // Check grid bounds
             if (!GridSystem.Instance.IsValidGridPosition(position)) return;
 
+            // Get machine size from registry
+            Vector2Int size = GetMachineSize(selectedMachineType);
+
             // Try to place
             var machine = yardState.PlaceMachine(
                 selectedMachineType,
                 position,
                 currentRotation,
-                defaultMachineSize
+                size
             );
 
             if (machine != null)
@@ -137,7 +141,21 @@ namespace JunkyardAutomation.Placement
             var machine = yardState.GetMachineAt(position);
             if (machine == null) return;
 
-            yardState.RemoveMachine(machine.Id, defaultMachineSize);
+            Vector2Int size = GetMachineSize(machine.MachineTypeId);
+            yardState.RemoveMachine(machine.Id, size);
+        }
+
+        /// <summary>
+        /// Get machine size from registry, or default if not found.
+        /// </summary>
+        private Vector2Int GetMachineSize(string machineType)
+        {
+            var definition = ContentRegistry.GetMachine(machineType);
+            if (definition != null)
+            {
+                return definition.GetSize();
+            }
+            return defaultMachineSize;
         }
 
         private void UpdateGhost()
@@ -149,7 +167,8 @@ namespace JunkyardAutomation.Placement
                 var hoveredTile = GetHoveredTile();
                 if (hoveredTile.HasValue && GridSystem.Instance.IsValidGridPosition(hoveredTile.Value))
                 {
-                    bool canPlace = yardState.CanPlaceAt(hoveredTile.Value, defaultMachineSize);
+                    Vector2Int size = GetMachineSize(selectedMachineType);
+                    bool canPlace = yardState.CanPlaceAt(hoveredTile.Value, size);
                     ghost.Show(hoveredTile.Value, currentRotation, canPlace);
                 }
                 else

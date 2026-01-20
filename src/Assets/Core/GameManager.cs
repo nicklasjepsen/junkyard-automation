@@ -1,4 +1,5 @@
 using UnityEngine;
+using JunkyardAutomation.Data;
 
 namespace JunkyardAutomation.Core
 {
@@ -26,11 +27,21 @@ namespace JunkyardAutomation.Core
                 return;
             }
             Instance = this;
+
+            // Load content definitions before anything else initializes
+            LoadContent();
         }
 
         private void Start()
         {
             Initialize();
+        }
+
+        private void LoadContent()
+        {
+            ContentRegistry.Clear();
+            ContentLoader.LoadAllContent();
+            ContentRegistry.MarkLoaded();
         }
 
         private void Initialize()
