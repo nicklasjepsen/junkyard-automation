@@ -2,7 +2,7 @@
 
 ## Engine: Unity (C#)
 
-**Version:** Unity 2022.3 LTS or newer (recommended: Unity 6)
+**Version:** Unity 6.3
 
 ## Requirements
 - 2D isometric rendering with many moving items.
@@ -36,18 +36,19 @@
 
 ### Project Structure
 ```
+src/                        # All C# source code (symlinked into Assets/Scripts)
+├── Core/                   # Simulation, grid, coordinate systems
+├── Data/                   # Data loaders, definitions
+├── Simulation/             # Runtime entities and systems
+├── UI/                     # All UI scripts
+└── Utils/                  # Helpers, extensions
+
 Assets/
-├── Scripts/
-│   ├── Core/           # Simulation, grid, coordinate systems
-│   ├── Data/           # Data loaders, definitions
-│   ├── Machines/       # Machine behaviors
-│   ├── Items/          # Item entities
-│   ├── UI/             # All UI scripts
-│   └── Utils/          # Helpers, extensions
+├── Scripts/                # Symlink or copy of src/
 ├── Prefabs/
 ├── Scenes/
 ├── StreamingAssets/
-│   └── data/           # JSON definitions
+│   └── data/               # JSON definitions
 ├── Sprites/
 └── UI/
 ```

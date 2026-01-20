@@ -48,6 +48,7 @@ Establish the core rendering and input foundation that all other systems depend 
 
 ### Grid Configuration (hardcoded for M0, data-driven later):
 ```csharp
+// src/Core/GridSystem.cs
 public class GridConfig
 {
     public int GridWidth = 32;          // tiles
@@ -59,6 +60,7 @@ public class GridConfig
 
 ### Camera Configuration:
 ```csharp
+// src/Core/CameraController.cs
 public class CameraConfig
 {
     public float MinZoom = 3f;          // orthographic size

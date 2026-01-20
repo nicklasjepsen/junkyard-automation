@@ -8,19 +8,20 @@ Junkyard Automation is a 2D isometric factory automation game built with **Unity
 
 ## Tech Stack
 
-- **Engine:** Unity 2022.3 LTS+ with 2D URP
+- **Engine:** Unity 6.3 with 2D URP
 - **Language:** C#
 - **UI:** Unity UI Toolkit
 - **Data:** JSON files in `Assets/StreamingAssets/data/`
+- **Source:** All C# code in `src/` (symlinked/copied to `Assets/Scripts/`)
 - **Simulation:** Deterministic fixed timestep (20 ticks/second)
 
 ## Architecture
 
 The simulation is **deterministic and separable from rendering**. Key separation:
 
-- **Simulation** (`Scripts/Simulation/`): Pure game state, tick-based updates
-- **Presentation** (`Scripts/Core/`, sprites): Renders from simulation snapshots
-- **UI** (`Scripts/UI/`): Observes state via events, never modifies directly
+- **Simulation** (`src/Simulation/`): Pure game state, tick-based updates
+- **Presentation** (`src/Core/`, sprites): Renders from simulation snapshots
+- **UI** (`src/UI/`): Observes state via events, never modifies directly
 
 **Tick order:** DeliverySystem → ConveyorSystem → MachineSystem → ContractSystem
 
