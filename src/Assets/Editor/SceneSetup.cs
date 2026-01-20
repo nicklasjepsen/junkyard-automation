@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using JunkyardAutomation.Core;
 using JunkyardAutomation.UI;
+using JunkyardAutomation.Placement;
 
 namespace JunkyardAutomation.Editor
 {
@@ -124,6 +125,77 @@ namespace JunkyardAutomation.Editor
 
             Debug.Log("[SceneSetup] DebugUI created");
 
+            // 7. Create PlacementGhost
+            GameObject ghostObj = GameObject.Find("PlacementGhost");
+            if (ghostObj == null)
+            {
+                ghostObj = new GameObject("PlacementGhost");
+            }
+
+            if (ghostObj.GetComponent<MeshFilter>() == null)
+            {
+                ghostObj.AddComponent<MeshFilter>();
+            }
+            if (ghostObj.GetComponent<MeshRenderer>() == null)
+            {
+                ghostObj.AddComponent<MeshRenderer>();
+            }
+            PlacementGhost ghost = ghostObj.GetComponent<PlacementGhost>();
+            if (ghost == null)
+            {
+                ghost = ghostObj.AddComponent<PlacementGhost>();
+            }
+
+            Debug.Log("[SceneSetup] PlacementGhost created");
+
+            // 8. Create PlacementManager
+            GameObject placementManagerObj = GameObject.Find("PlacementManager");
+            if (placementManagerObj == null)
+            {
+                placementManagerObj = new GameObject("PlacementManager");
+            }
+
+            PlacementManager placementManager = placementManagerObj.GetComponent<PlacementManager>();
+            if (placementManager == null)
+            {
+                placementManager = placementManagerObj.AddComponent<PlacementManager>();
+            }
+
+            // Wire up ghost reference via SerializedObject
+            SerializedObject pmSO = new SerializedObject(placementManager);
+            pmSO.FindProperty("ghost").objectReferenceValue = ghost;
+            pmSO.ApplyModifiedProperties();
+
+            Debug.Log("[SceneSetup] PlacementManager created");
+
+            // 9. Create MachineVisualManager
+            GameObject visualManagerObj = GameObject.Find("MachineVisualManager");
+            if (visualManagerObj == null)
+            {
+                visualManagerObj = new GameObject("MachineVisualManager");
+            }
+
+            if (visualManagerObj.GetComponent<MachineVisualManager>() == null)
+            {
+                visualManagerObj.AddComponent<MachineVisualManager>();
+            }
+
+            Debug.Log("[SceneSetup] MachineVisualManager created");
+
+            // 10. Create BuildMenuUI
+            GameObject buildMenuObj = GameObject.Find("BuildMenuUI");
+            if (buildMenuObj == null)
+            {
+                buildMenuObj = new GameObject("BuildMenuUI");
+            }
+
+            if (buildMenuObj.GetComponent<BuildMenuUI>() == null)
+            {
+                buildMenuObj.AddComponent<BuildMenuUI>();
+            }
+
+            Debug.Log("[SceneSetup] BuildMenuUI created");
+
             // Mark scene dirty so it can be saved
             UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
@@ -131,6 +203,7 @@ namespace JunkyardAutomation.Editor
 
             Debug.Log("[SceneSetup] Scene setup complete! Press Play to test.");
             Debug.Log("[SceneSetup] Controls: WASD/Arrows to pan, Mouse wheel to zoom, F3 for debug overlay");
+            Debug.Log("[SceneSetup] Build: Click Conveyor, R to rotate, Left-click to place, ESC to cancel");
         }
     }
 }
