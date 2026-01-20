@@ -36,21 +36,21 @@
 
 ### Project Structure
 ```
-src/                        # All C# source code (symlinked into Assets/Scripts)
-├── Core/                   # Simulation, grid, coordinate systems
-├── Data/                   # Data loaders, definitions
-├── Simulation/             # Runtime entities and systems
-├── UI/                     # All UI scripts
-└── Utils/                  # Helpers, extensions
-
-Assets/
-├── Scripts/                # Symlink or copy of src/
-├── Prefabs/
-├── Scenes/
-├── StreamingAssets/
-│   └── data/               # JSON definitions
-├── Sprites/
-└── UI/
+src/                            # Unity project root
+├── Assets/
+│   ├── Scripts/
+│   │   ├── Core/               # Grid, camera, rendering
+│   │   ├── Data/               # Data loaders, definitions
+│   │   ├── Simulation/         # Runtime entities and systems
+│   │   ├── UI/                 # All UI scripts
+│   │   └── Utils/              # Helpers, extensions
+│   ├── StreamingAssets/
+│   │   └── data/               # JSON definitions
+│   ├── Prefabs/
+│   ├── Scenes/
+│   └── Sprites/
+├── ProjectSettings/            # Unity project settings
+└── Packages/                   # Unity package manifest
 ```
 
 ### Dependencies

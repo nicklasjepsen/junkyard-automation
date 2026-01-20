@@ -6,7 +6,7 @@ Simulation is deterministic and separable from rendering.
 ## Project Layout
 
 ```
-src/                            # All C# source code
+src/Assets/Scripts/             # All C# source code
 ├── Core/
 │   ├── GameManager.cs          # Main game loop, state management
 │   ├── SimulationManager.cs    # Fixed timestep tick loop
