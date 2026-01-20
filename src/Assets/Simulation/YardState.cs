@@ -12,9 +12,13 @@ namespace JunkyardAutomation.Simulation
     {
         public TileOccupancy Occupancy { get; private set; } = new TileOccupancy();
         public Dictionary<string, PlacedMachine> Machines { get; private set; } = new Dictionary<string, PlacedMachine>();
+        public List<ItemEntity> Items { get; private set; } = new List<ItemEntity>();
+        private Dictionary<string, ItemEntity> itemsById = new Dictionary<string, ItemEntity>();
 
         public event Action<PlacedMachine> OnMachinePlaced;
         public event Action<PlacedMachine> OnMachineRemoved;
+        public event Action<ItemEntity> OnItemAdded;
+        public event Action<ItemEntity> OnItemRemoved;
 
         /// <summary>
         /// Place a new machine in the yard.
@@ -93,5 +97,68 @@ namespace JunkyardAutomation.Simulation
         /// Get count of placed machines.
         /// </summary>
         public int MachineCount => Machines.Count;
+
+        /// <summary>
+        /// Get count of items.
+        /// </summary>
+        public int ItemCount => Items.Count;
+
+        #region Item Management
+
+        /// <summary>
+        /// Add a new item to the yard.
+        /// </summary>
+        public ItemEntity AddItem(string typeId, Vector2Int position, int direction)
+        {
+            var item = new ItemEntity(typeId, position, direction);
+            Items.Add(item);
+            itemsById[item.Id] = item;
+
+            Debug.Log($"[YardState] Added item {typeId} at {position}");
+
+            OnItemAdded?.Invoke(item);
+            return item;
+        }
+
+        /// <summary>
+        /// Remove an item from the yard.
+        /// </summary>
+        public bool RemoveItem(string itemId)
+        {
+            if (!itemsById.TryGetValue(itemId, out var item))
+            {
+                return false;
+            }
+
+            Items.Remove(item);
+            itemsById.Remove(itemId);
+
+            OnItemRemoved?.Invoke(item);
+            return true;
+        }
+
+        /// <summary>
+        /// Get item by ID.
+        /// </summary>
+        public ItemEntity GetItem(string itemId)
+        {
+            return itemsById.TryGetValue(itemId, out var item) ? item : null;
+        }
+
+        /// <summary>
+        /// Get all items at a specific tile.
+        /// </summary>
+        public IEnumerable<ItemEntity> GetItemsAt(Vector2Int position)
+        {
+            foreach (var item in Items)
+            {
+                if (item.Position == position)
+                {
+                    yield return item;
+                }
+            }
+        }
+
+        #endregion
     }
 }

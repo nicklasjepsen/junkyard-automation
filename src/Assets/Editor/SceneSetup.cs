@@ -3,6 +3,7 @@ using UnityEditor;
 using JunkyardAutomation.Core;
 using JunkyardAutomation.UI;
 using JunkyardAutomation.Placement;
+using JunkyardAutomation.Simulation;
 
 namespace JunkyardAutomation.Editor
 {
@@ -196,6 +197,34 @@ namespace JunkyardAutomation.Editor
 
             Debug.Log("[SceneSetup] BuildMenuUI created");
 
+            // 11. Create SimulationManager
+            GameObject simManagerObj = GameObject.Find("SimulationManager");
+            if (simManagerObj == null)
+            {
+                simManagerObj = new GameObject("SimulationManager");
+            }
+
+            if (simManagerObj.GetComponent<SimulationManager>() == null)
+            {
+                simManagerObj.AddComponent<SimulationManager>();
+            }
+
+            Debug.Log("[SceneSetup] SimulationManager created");
+
+            // 12. Create ItemVisualManager
+            GameObject itemVisualObj = GameObject.Find("ItemVisualManager");
+            if (itemVisualObj == null)
+            {
+                itemVisualObj = new GameObject("ItemVisualManager");
+            }
+
+            if (itemVisualObj.GetComponent<ItemVisualManager>() == null)
+            {
+                itemVisualObj.AddComponent<ItemVisualManager>();
+            }
+
+            Debug.Log("[SceneSetup] ItemVisualManager created");
+
             // Mark scene dirty so it can be saved
             UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
@@ -204,6 +233,7 @@ namespace JunkyardAutomation.Editor
             Debug.Log("[SceneSetup] Scene setup complete! Press Play to test.");
             Debug.Log("[SceneSetup] Controls: WASD/Arrows to pan, Mouse wheel to zoom, F3 for debug overlay");
             Debug.Log("[SceneSetup] Build: Click Conveyor, R to rotate, Left-click to place, ESC to cancel");
+            Debug.Log("[SceneSetup] Simulation: SPACE to spawn item, P to pause/resume");
         }
     }
 }

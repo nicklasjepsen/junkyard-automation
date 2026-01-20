@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using JunkyardAutomation.Simulation;
+using JunkyardAutomation.Placement;
 
 namespace JunkyardAutomation.UI
 {
@@ -89,8 +91,8 @@ namespace JunkyardAutomation.UI
 
             float padding = 10f;
             float lineHeight = fontSize + 4f;
-            float boxWidth = 220f;
-            float boxHeight = lineHeight * 5 + padding * 2;
+            float boxWidth = 250f;
+            float boxHeight = lineHeight * 8 + padding * 2;
 
             // Background box
             Rect boxRect = new Rect(padding, padding, boxWidth, boxHeight);
@@ -138,6 +140,25 @@ namespace JunkyardAutomation.UI
             if (gridSystem != null)
             {
                 DrawLabel(padding + 5f, y, $"Grid Size: {gridSystem.GridWidth}x{gridSystem.GridHeight}");
+            }
+            y += lineHeight;
+
+            // Simulation tick and pause status
+            var simManager = SimulationManager.Instance;
+            if (simManager != null)
+            {
+                string pauseStatus = simManager.IsPaused ? " [PAUSED]" : "";
+                DrawLabel(padding + 5f, y, $"Tick: {simManager.CurrentTick}{pauseStatus}");
+            }
+            y += lineHeight;
+
+            // Machine and item count
+            var yardState = PlacementManager.Instance?.YardState;
+            if (yardState != null)
+            {
+                DrawLabel(padding + 5f, y, $"Machines: {yardState.MachineCount}");
+                y += lineHeight;
+                DrawLabel(padding + 5f, y, $"Items: {yardState.ItemCount}");
             }
 
             // Toggle hint at bottom
