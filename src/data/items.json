@@ -1,0 +1,56 @@
+[
+  {
+    "id": "scrap_ferrous",
+    "name": "Ferrous Scrap",
+    "category": "scrap",
+    "description": "Mixed ferrous metal scrap from vehicles"
+  },
+  {
+    "id": "scrap_nonferrous",
+    "name": "Non-Ferrous Scrap",
+    "category": "scrap",
+    "description": "Mixed non-ferrous metal scrap (aluminum, copper, etc.)"
+  },
+  {
+    "id": "scrap_plastic",
+    "name": "Plastic Scrap",
+    "category": "scrap",
+    "description": "Mixed plastic waste"
+  },
+  {
+    "id": "scrap_trash",
+    "name": "Trash",
+    "category": "waste",
+    "description": "Non-recyclable waste material"
+  },
+  {
+    "id": "shredded_ferrous",
+    "name": "Shredded Ferrous",
+    "category": "processed",
+    "description": "Shredded ferrous metal pieces"
+  },
+  {
+    "id": "shredded_nonferrous",
+    "name": "Shredded Non-Ferrous",
+    "category": "processed",
+    "description": "Shredded non-ferrous metal pieces"
+  },
+  {
+    "id": "steel_ingot",
+    "name": "Steel Ingot",
+    "category": "product",
+    "description": "Refined steel ingot ready for sale"
+  },
+  {
+    "id": "copper_chunk",
+    "name": "Copper Chunk",
+    "category": "product",
+    "description": "Sorted copper material"
+  },
+  {
+    "id": "plastic_pellets",
+    "name": "Plastic Pellets",
+    "category": "product",
+    "description": "Recycled plastic pellets"
+  }
+]

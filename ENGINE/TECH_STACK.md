@@ -1,8 +1,8 @@
 # Tech Stack
 
-## Engine: Unity (C#)
+## Engine: Godot 4.x (C#/.NET)
 
-**Version:** Unity 6.3
+**Version:** Godot 4.3+ with .NET 8.0
 
 ## Requirements
 - 2D isometric rendering with many moving items.
@@ -11,53 +11,70 @@
 - Save/load.
 - UI: build menus, inspectors, overlays.
 
-## Unity-Specific Choices
+## Godot-Specific Choices
 
 ### Rendering
-- **2D Renderer** with Universal Render Pipeline (URP) for flexibility
-- **Tilemap** system for grid-based terrain/floors
-- **SpriteRenderer** for machines and items
-- **Sorting Layers:** Background, Floor, Machines, Items, UI
+- **2D Renderer** with isometric tilemap support
+- **TileMap** with isometric mode for grid-based terrain/floors
+- **Sprite2D** for machines and items
+- **CanvasLayers** for UI separation
+- **Y-Sort** enabled for proper depth ordering
 
 ### Simulation
-- **FixedUpdate** for deterministic tick-based simulation
-- Simulation logic separated from MonoBehaviour where possible
-- Target: 20 simulation ticks/second (configurable)
+- **_physics_process()** for deterministic tick-based simulation
+- Custom SimulationManager autoload for tick coordination
+- Target: 20 simulation ticks/second (configurable via Engine.physics_ticks_per_second)
 
 ### Data Loading
-- **JSON** via Unity's JsonUtility or Newtonsoft.Json
-- Data files in `Assets/StreamingAssets/data/` for easy modding later
-- ScriptableObjects for editor-friendly definitions (optional)
+- **JSON** via Godot's JSON class
+- Data files in `data/` folder (exported with project)
+- Resource files (.tres) for editor-friendly definitions (optional)
 
 ### UI
-- **Unity UI Toolkit** (preferred) or **uGUI** for HUD/menus
-- Canvas set to Screen Space - Overlay for HUD
-- World Space canvas for in-game labels if needed
+- **Control** nodes for HUD/menus
+- **CanvasLayer** for HUD overlay
+- **Theme** resources for consistent styling
 
 ### Project Structure
 ```
-src/                            # Unity project root
-├── Assets/
-│   ├── Core/                   # Grid, camera, rendering
-│   ├── Data/                   # Data loaders, definitions
-│   ├── Simulation/             # Runtime entities and systems
-│   ├── UI/                     # All UI scripts
-│   ├── Utils/                  # Helpers, extensions
-│   ├── StreamingAssets/
-│   │   └── data/               # JSON definitions
-│   ├── Prefabs/
-│   ├── Scenes/
-│   └── Sprites/
-├── ProjectSettings/            # Unity project settings
-└── Packages/                   # Unity package manifest
+src/                            # Godot project root
+├── project.godot               # Project configuration
+├── autoload/                   # Singletons (GameManager, etc.)
+├── scenes/
+│   ├── main.tscn              # Main game scene
+│   ├── game/                   # Game-specific scenes
+│   └── ui/                     # UI scenes
+├── scripts/
+│   ├── core/                   # Grid, camera, rendering
+│   ├── data/                   # Data loaders, definitions
+│   ├── simulation/             # Runtime entities and systems
+│   ├── placement/              # Building/placement logic
+│   └── ui/                     # UI scripts
+├── data/                       # JSON definitions
+│   ├── items.json
+│   ├── machines.json
+│   └── recipes.json
+├── assets/
+│   ├── sprites/
+│   ├── fonts/
+│   └── audio/
+└── resources/                  # Godot resource files (.tres)
 ```
 
+### Autoloads (Singletons)
+- `GameManager` - Game state, initialization
+- `GridSystem` - Coordinate conversions, grid data
+- `SimulationManager` - Tick loop, simulation systems
+- `ContentRegistry` - Loaded definitions access
+
 ### Dependencies
+- .NET 8.0 SDK
+- Godot.NET.Sdk 4.3.0
 - Keep external packages minimal
-- Allowed: TextMeshPro (included), Newtonsoft.Json (if needed)
-- Avoid: heavy frameworks, paid assets
+- Core Godot + .NET functionality only
 
 ## Performance Notes
-- Use object pooling for items
-- Batch sprite rendering where possible
+- Use object pooling for items (custom implementation)
+- Leverage Godot's built-in batching for sprites
 - Profile early with 500+ items
+- Consider using typed arrays and packed scenes

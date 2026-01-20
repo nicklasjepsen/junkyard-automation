@@ -1,0 +1,70 @@
+[
+  {
+    "id": "shred_ferrous",
+    "machine_id": "shredder",
+    "inputs": [
+      { "item_id": "scrap_ferrous", "count": 1 }
+    ],
+    "outputs": [
+      { "item_id": "shredded_ferrous", "count": 2 }
+    ],
+    "processing_time": 3
+  },
+  {
+    "id": "shred_nonferrous",
+    "machine_id": "shredder",
+    "inputs": [
+      { "item_id": "scrap_nonferrous", "count": 1 }
+    ],
+    "outputs": [
+      { "item_id": "shredded_nonferrous", "count": 2 }
+    ],
+    "processing_time": 3
+  },
+  {
+    "id": "shred_plastic",
+    "machine_id": "shredder",
+    "inputs": [
+      { "item_id": "scrap_plastic", "count": 1 }
+    ],
+    "outputs": [
+      { "item_id": "plastic_pellets", "count": 3 }
+    ],
+    "processing_time": 4
+  },
+  {
+    "id": "smelt_ferrous",
+    "machine_id": "smelter",
+    "inputs": [
+      { "item_id": "shredded_ferrous", "count": 4 }
+    ],
+    "outputs": [
+      { "item_id": "steel_ingot", "count": 1 }
+    ],
+    "processing_time": 5
+  },
+  {
+    "id": "smelt_nonferrous",
+    "machine_id": "smelter",
+    "inputs": [
+      { "item_id": "shredded_nonferrous", "count": 3 }
+    ],
+    "outputs": [
+      { "item_id": "copper_chunk", "count": 1 }
+    ],
+    "processing_time": 4
+  },
+  {
+    "id": "separate_mixed",
+    "machine_id": "magnet_separator",
+    "inputs": [
+      { "item_id": "scrap_ferrous", "count": 1 },
+      { "item_id": "scrap_nonferrous", "count": 1 }
+    ],
+    "outputs": [
+      { "item_id": "scrap_ferrous", "count": 1, "output_index": 0 },
+      { "item_id": "scrap_nonferrous", "count": 1, "output_index": 1 }
+    ],
+    "processing_time": 1
+  }
+]

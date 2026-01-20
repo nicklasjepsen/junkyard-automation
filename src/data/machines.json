@@ -1,0 +1,83 @@
+[
+  {
+    "id": "conveyor",
+    "name": "Conveyor Belt",
+    "category": "transport",
+    "description": "Moves items in a single direction",
+    "size": [1, 1],
+    "placeable": true,
+    "speed": 1.0
+  },
+  {
+    "id": "splitter",
+    "name": "Splitter",
+    "category": "transport",
+    "description": "Splits items into two output directions",
+    "size": [1, 1],
+    "placeable": true,
+    "outputs": 2
+  },
+  {
+    "id": "shredder",
+    "name": "Shredder",
+    "category": "processor",
+    "description": "Shreds scrap into smaller pieces",
+    "size": [2, 2],
+    "placeable": true,
+    "processing_time": 3,
+    "accepts": ["scrap_ferrous", "scrap_nonferrous", "scrap_plastic"]
+  },
+  {
+    "id": "smelter",
+    "name": "Smelter",
+    "category": "processor",
+    "description": "Melts metals into ingots",
+    "size": [2, 2],
+    "placeable": true,
+    "processing_time": 5,
+    "accepts": ["shredded_ferrous", "shredded_nonferrous"]
+  },
+  {
+    "id": "washer",
+    "name": "Washer",
+    "category": "processor",
+    "description": "Cleans materials for better processing",
+    "size": [2, 1],
+    "placeable": true,
+    "processing_time": 2
+  },
+  {
+    "id": "magnet_separator",
+    "name": "Magnet Separator",
+    "category": "sorter",
+    "description": "Separates ferrous from non-ferrous materials",
+    "size": [1, 2],
+    "placeable": true,
+    "processing_time": 1
+  },
+  {
+    "id": "storage",
+    "name": "Storage Bin",
+    "category": "storage",
+    "description": "Stores items temporarily",
+    "size": [2, 2],
+    "placeable": true,
+    "capacity": 50
+  },
+  {
+    "id": "seller",
+    "name": "Seller",
+    "category": "output",
+    "description": "Sells processed materials for money",
+    "size": [2, 1],
+    "placeable": true
+  },
+  {
+    "id": "delivery",
+    "name": "Delivery Dock",
+    "category": "input",
+    "description": "Receives incoming scrap deliveries",
+    "size": [3, 2],
+    "placeable": false
+  }
+]
