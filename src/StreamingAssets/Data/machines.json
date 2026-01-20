@@ -1,0 +1,121 @@
+{
+  "machines": [
+    {
+      "id": "Conveyor",
+      "displayName": "Conveyor Belt",
+      "category": "logistics",
+      "size": { "x": 1, "y": 1 },
+      "cost": 10,
+      "color": "#666666",
+      "ticksPerMove": 4,
+      "processingTicks": 0,
+      "inputSlots": 0,
+      "outputSlots": 0,
+      "storageCapacity": 0
+    },
+    {
+      "id": "Splitter",
+      "displayName": "Splitter",
+      "category": "logistics",
+      "size": { "x": 1, "y": 1 },
+      "cost": 50,
+      "color": "#888888",
+      "ticksPerMove": 4,
+      "processingTicks": 0,
+      "inputSlots": 1,
+      "outputSlots": 2,
+      "storageCapacity": 0
+    },
+    {
+      "id": "MagnetSeparator",
+      "displayName": "Magnet Separator",
+      "category": "processor",
+      "size": { "x": 2, "y": 1 },
+      "cost": 100,
+      "color": "#AA2222",
+      "ticksPerMove": 0,
+      "processingTicks": 8,
+      "inputSlots": 1,
+      "outputSlots": 2,
+      "storageCapacity": 0
+    },
+    {
+      "id": "Washer",
+      "displayName": "Washer",
+      "category": "processor",
+      "size": { "x": 2, "y": 2 },
+      "cost": 200,
+      "color": "#4488CC",
+      "ticksPerMove": 0,
+      "processingTicks": 16,
+      "inputSlots": 1,
+      "outputSlots": 1,
+      "storageCapacity": 0
+    },
+    {
+      "id": "Shredder",
+      "displayName": "Shredder",
+      "category": "processor",
+      "size": { "x": 2, "y": 2 },
+      "cost": 250,
+      "color": "#AA4444",
+      "ticksPerMove": 0,
+      "processingTicks": 20,
+      "inputSlots": 1,
+      "outputSlots": 1,
+      "storageCapacity": 0
+    },
+    {
+      "id": "Smelter",
+      "displayName": "Smelter",
+      "category": "processor",
+      "size": { "x": 2, "y": 2 },
+      "cost": 300,
+      "color": "#CC6600",
+      "ticksPerMove": 0,
+      "processingTicks": 24,
+      "inputSlots": 1,
+      "outputSlots": 1,
+      "storageCapacity": 0
+    },
+    {
+      "id": "Storage",
+      "displayName": "Storage Bin",
+      "category": "storage",
+      "size": { "x": 2, "y": 2 },
+      "cost": 75,
+      "color": "#886644",
+      "ticksPerMove": 0,
+      "processingTicks": 0,
+      "inputSlots": 1,
+      "outputSlots": 1,
+      "storageCapacity": 100
+    },
+    {
+      "id": "Seller",
+      "displayName": "Shipping Dock",
+      "category": "seller",
+      "size": { "x": 3, "y": 2 },
+      "cost": 0,
+      "color": "#228822",
+      "ticksPerMove": 0,
+      "processingTicks": 0,
+      "inputSlots": 1,
+      "outputSlots": 0,
+      "storageCapacity": 0
+    },
+    {
+      "id": "Delivery",
+      "displayName": "Delivery Dock",
+      "category": "source",
+      "size": { "x": 3, "y": 2 },
+      "cost": 0,
+      "color": "#2288CC",
+      "ticksPerMove": 0,
+      "processingTicks": 0,
+      "inputSlots": 0,
+      "outputSlots": 1,
+      "storageCapacity": 0
+    }
+  ]
+}
