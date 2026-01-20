@@ -3,14 +3,16 @@
 ## Core principle
 Simulation is deterministic and separable from rendering.
 
-## Unity Project Layout
+## Project Layout
 
 ```
-Scripts/
+src/Assets/                     # All C# source code
 ├── Core/
 │   ├── GameManager.cs          # Main game loop, state management
 │   ├── SimulationManager.cs    # Fixed timestep tick loop
 │   ├── GridSystem.cs           # Isometric grid + coordinate conversion
+│   ├── GridRenderer.cs         # Procedural grid mesh generation
+│   ├── TileHighlighter.cs      # Mouse hover tile highlight
 │   └── CameraController.cs     # Pan, zoom, bounds
 ├── Data/
 │   ├── DataLoader.cs           # JSON loading from StreamingAssets

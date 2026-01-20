@@ -3,7 +3,7 @@
 A 2D isometric factory automation game where inputs are messy scrap batches. The player builds adaptive sorting + processing lines to convert unpredictable junk into standardized products and fulfill contracts.
 
 ## Tech Stack
-- **Engine:** Unity 2022.3 LTS+ (C#)
+- **Engine:** Unity 6.3 (C#)
 - **Rendering:** 2D URP with Tilemap
 - **UI:** Unity UI Toolkit
 
