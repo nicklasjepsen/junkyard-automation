@@ -93,6 +93,29 @@ namespace JunkyardAutomation.Placement
             {
                 HandleClick();
             }
+
+            // Debug: Spawn item (SPACE key)
+            if (keyboard.spaceKey.wasPressedThisFrame)
+            {
+                TrySpawnItem();
+            }
+        }
+
+        private void TrySpawnItem()
+        {
+            var hoveredTile = GetHoveredTile();
+            if (!hoveredTile.HasValue) return;
+
+            // Check if there's a conveyor at this position
+            var machine = yardState.GetMachineAt(hoveredTile.Value);
+            if (machine == null || machine.MachineTypeId != "Conveyor")
+            {
+                Debug.Log("[PlacementManager] Can only spawn items on conveyors");
+                return;
+            }
+
+            // Spawn a ScrapFerrous item
+            yardState.AddItem("ScrapFerrous", hoveredTile.Value, machine.Rotation);
         }
 
         private void HandleClick()

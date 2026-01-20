@@ -64,6 +64,39 @@
 2. Placing at grid boundaries works
 3. 100+ conveyors maintains 60 FPS
 
+## M0 - Simulation & Item Movement Tests
+
+### Simulation Manager
+1. Tick counter increments in debug overlay
+2. P key pauses simulation (tick stops incrementing)
+3. P key resumes simulation
+4. Debug overlay shows [PAUSED] when paused
+
+### Item Spawning
+1. SPACE key spawns item on hovered conveyor
+2. Item appears as colored diamond
+3. Item color matches type from items.json (brown for ScrapFerrous)
+4. Cannot spawn item on empty tile (no conveyor)
+
+### Item Movement
+1. Spawned item moves along conveyor direction
+2. Item moves smoothly (interpolated between ticks)
+3. Item transfers to connected conveyor
+4. Item stops at conveyor end
+5. Item despawns when reaching dead end (no connected conveyor)
+
+### Conveyor Chains
+1. Items move through 5+ connected conveyors
+2. Items follow conveyor rotation changes (90° turns)
+3. Items block when facing conveyors point at each other
+4. Multiple items can be on different conveyors simultaneously
+
+### Edge Cases
+1. 50+ items on conveyors maintains 60 FPS
+2. Items don't duplicate when crossing tile boundaries
+3. Pausing simulation freezes all item movement
+4. Resuming continues from exact position
+
 ## M1 - Smoke tests (every build)
 1. Game boots to yard
 2. Can place conveyor
