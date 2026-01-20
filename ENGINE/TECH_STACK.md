@@ -38,12 +38,11 @@
 ```
 src/                            # Unity project root
 ├── Assets/
-│   ├── Scripts/
-│   │   ├── Core/               # Grid, camera, rendering
-│   │   ├── Data/               # Data loaders, definitions
-│   │   ├── Simulation/         # Runtime entities and systems
-│   │   ├── UI/                 # All UI scripts
-│   │   └── Utils/              # Helpers, extensions
+│   ├── Core/                   # Grid, camera, rendering
+│   ├── Data/                   # Data loaders, definitions
+│   ├── Simulation/             # Runtime entities and systems
+│   ├── UI/                     # All UI scripts
+│   ├── Utils/                  # Helpers, extensions
 │   ├── StreamingAssets/
 │   │   └── data/               # JSON definitions
 │   ├── Prefabs/
