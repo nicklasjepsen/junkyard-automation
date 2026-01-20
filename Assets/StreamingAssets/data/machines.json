@@ -1,0 +1,87 @@
+{
+  "dataVersion": "0.1.0",
+  "machines": [
+    {
+      "id": "Conveyor",
+      "displayName": "Conveyor Belt",
+      "description": "Moves items forward one tile.",
+      "footprint": { "width": 1, "height": 1 },
+      "cost": 10,
+      "machineKind": "Conveyor",
+      "processTime": 0.5
+    },
+    {
+      "id": "Splitter",
+      "displayName": "Splitter",
+      "description": "Routes items based on filter rules.",
+      "footprint": { "width": 1, "height": 1 },
+      "cost": 50,
+      "machineKind": "Splitter",
+      "inputs": { "count": 1, "bufferSize": 1 },
+      "outputs": { "count": 2, "bufferSize": 1 },
+      "processTime": 0.3
+    },
+    {
+      "id": "MagnetSeparator",
+      "displayName": "Magnet Separator",
+      "description": "Pulls ferrous scrap to side output.",
+      "footprint": { "width": 2, "height": 1 },
+      "cost": 100,
+      "machineKind": "Processor",
+      "inputs": { "count": 1, "bufferSize": 2 },
+      "outputs": { "count": 2, "bufferSize": 2 },
+      "processTime": 0.8
+    },
+    {
+      "id": "Washer",
+      "displayName": "Washer",
+      "description": "Cleans plastic scrap into pellets.",
+      "footprint": { "width": 2, "height": 2 },
+      "cost": 200,
+      "machineKind": "Processor",
+      "inputs": { "count": 1, "bufferSize": 4 },
+      "outputs": { "count": 1, "bufferSize": 4 },
+      "processTime": 2.0
+    },
+    {
+      "id": "Shredder",
+      "displayName": "Shredder",
+      "description": "Shreds metal scrap for smelting.",
+      "footprint": { "width": 2, "height": 2 },
+      "cost": 250,
+      "machineKind": "Processor",
+      "inputs": { "count": 1, "bufferSize": 4 },
+      "outputs": { "count": 1, "bufferSize": 4 },
+      "processTime": 1.5
+    },
+    {
+      "id": "Smelter",
+      "displayName": "Smelter",
+      "description": "Melts shredded metal into ingots.",
+      "footprint": { "width": 2, "height": 2 },
+      "cost": 300,
+      "machineKind": "Processor",
+      "inputs": { "count": 1, "bufferSize": 4 },
+      "outputs": { "count": 1, "bufferSize": 4 },
+      "processTime": 3.0
+    },
+    {
+      "id": "Storage",
+      "displayName": "Storage Bin",
+      "description": "Buffers items for later use.",
+      "footprint": { "width": 2, "height": 2 },
+      "cost": 75,
+      "machineKind": "Storage",
+      "inputs": { "count": 1, "bufferSize": 50 },
+      "outputs": { "count": 1, "bufferSize": 50 }
+    },
+    {
+      "id": "Seller",
+      "displayName": "Shipping Dock",
+      "description": "Sells products and fulfills contracts.",
+      "footprint": { "width": 3, "height": 2 },
+      "cost": 0,
+      "machineKind": "Seller"
+    }
+  ]
+}

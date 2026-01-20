@@ -1,0 +1,47 @@
+{
+  "dataVersion": "0.1.0",
+  "items": [
+    {
+      "id": "ScrapFerrous",
+      "displayName": "Ferrous Scrap",
+      "category": "scrap",
+      "sellPrice": 1
+    },
+    {
+      "id": "ScrapNonFerrous",
+      "displayName": "Non-Ferrous Scrap",
+      "category": "scrap",
+      "sellPrice": 2
+    },
+    {
+      "id": "ScrapPlastic",
+      "displayName": "Plastic Scrap",
+      "category": "scrap",
+      "sellPrice": 1
+    },
+    {
+      "id": "ScrapTrash",
+      "displayName": "Trash",
+      "category": "scrap",
+      "sellPrice": 0
+    },
+    {
+      "id": "SteelIngot",
+      "displayName": "Steel Ingot",
+      "category": "product",
+      "sellPrice": 10
+    },
+    {
+      "id": "CopperChunk",
+      "displayName": "Copper Chunk",
+      "category": "product",
+      "sellPrice": 15
+    },
+    {
+      "id": "PlasticPellets",
+      "displayName": "Plastic Pellets",
+      "category": "product",
+      "sellPrice": 8
+    }
+  ]
+}
