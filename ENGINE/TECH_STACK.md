@@ -1,6 +1,8 @@
 # Tech Stack
 
-This document is intentionally engine-agnostic.
+## Engine: Unity (C#)
+
+**Version:** Unity 2022.3 LTS or newer (recommended: Unity 6)
 
 ## Requirements
 - 2D isometric rendering with many moving items.
@@ -9,17 +11,53 @@ This document is intentionally engine-agnostic.
 - Save/load.
 - UI: build menus, inspectors, overlays.
 
-## Suggested engines (choose one)
-- Godot (fast iteration, good 2D)
-- Unity (common tooling, good UI)
-- MonoGame (code-first, excellent control)
+## Unity-Specific Choices
 
-## Recommendation
-Pick an engine that the team can ship with quickly. For AI-agent development, prioritize:
-- Simple scene setup
-- Easy JSON/YAML loading
-- Straightforward UI
+### Rendering
+- **2D Renderer** with Universal Render Pipeline (URP) for flexibility
+- **Tilemap** system for grid-based terrain/floors
+- **SpriteRenderer** for machines and items
+- **Sorting Layers:** Background, Floor, Machines, Items, UI
 
-Once chosen, update:
-- ENGINE/ARCHITECTURE.md with concrete classes/modules.
-- ENGINE/DATA_FORMATS.md with exact schemas.
+### Simulation
+- **FixedUpdate** for deterministic tick-based simulation
+- Simulation logic separated from MonoBehaviour where possible
+- Target: 20 simulation ticks/second (configurable)
+
+### Data Loading
+- **JSON** via Unity's JsonUtility or Newtonsoft.Json
+- Data files in `Assets/StreamingAssets/data/` for easy modding later
+- ScriptableObjects for editor-friendly definitions (optional)
+
+### UI
+- **Unity UI Toolkit** (preferred) or **uGUI** for HUD/menus
+- Canvas set to Screen Space - Overlay for HUD
+- World Space canvas for in-game labels if needed
+
+### Project Structure
+```
+Assets/
+├── Scripts/
+│   ├── Core/           # Simulation, grid, coordinate systems
+│   ├── Data/           # Data loaders, definitions
+│   ├── Machines/       # Machine behaviors
+│   ├── Items/          # Item entities
+│   ├── UI/             # All UI scripts
+│   └── Utils/          # Helpers, extensions
+├── Prefabs/
+├── Scenes/
+├── StreamingAssets/
+│   └── data/           # JSON definitions
+├── Sprites/
+└── UI/
+```
+
+### Dependencies
+- Keep external packages minimal
+- Allowed: TextMeshPro (included), Newtonsoft.Json (if needed)
+- Avoid: heavy frameworks, paid assets
+
+## Performance Notes
+- Use object pooling for items
+- Batch sprite rendering where possible
+- Profile early with 500+ items
