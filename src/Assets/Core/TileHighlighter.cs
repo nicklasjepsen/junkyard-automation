@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace JunkyardAutomation.Core
 {
     /// <summary>
     /// Highlights the tile under the mouse cursor.
     /// Creates a diamond-shaped highlight overlay.
+    /// Uses Unity's new Input System.
     /// </summary>
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class TileHighlighter : MonoBehaviour
@@ -93,7 +95,15 @@ namespace JunkyardAutomation.Core
                 return;
             }
 
-            Vector2 mousePos = Input.mousePosition;
+            var mouse = Mouse.current;
+            if (mouse == null)
+            {
+                hoveredTile = null;
+                meshRenderer.enabled = false;
+                return;
+            }
+
+            Vector2 mousePos = mouse.position.ReadValue();
             Vector2Int gridPos = GridSystem.Instance.ScreenToGrid(mousePos, mainCamera);
 
             // Check if position is valid

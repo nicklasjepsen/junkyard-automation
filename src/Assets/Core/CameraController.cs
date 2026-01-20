@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace JunkyardAutomation.Core
 {
     /// <summary>
     /// Controls camera pan and zoom for the isometric view.
+    /// Uses Unity's new Input System.
     /// </summary>
     [RequireComponent(typeof(Camera))]
     public class CameraController : MonoBehaviour
@@ -11,7 +13,7 @@ namespace JunkyardAutomation.Core
         [Header("Zoom Settings")]
         [SerializeField] private float minZoom = 3f;
         [SerializeField] private float maxZoom = 15f;
-        [SerializeField] private float zoomSpeed = 2f;
+        [SerializeField] private float zoomSpeed = 10f;
         [SerializeField] private float zoomSmoothTime = 0.1f;
 
         [Header("Pan Settings")]
@@ -22,7 +24,7 @@ namespace JunkyardAutomation.Core
         private Camera cam;
         private float targetZoom;
         private float zoomVelocity;
-        private Vector3 lastMousePosition;
+        private Vector2 lastMousePosition;
         private bool isDragging;
 
         private void Awake()
@@ -40,7 +42,10 @@ namespace JunkyardAutomation.Core
 
         private void HandleZoom()
         {
-            float scrollDelta = Input.mouseScrollDelta.y;
+            var mouse = Mouse.current;
+            if (mouse == null) return;
+
+            float scrollDelta = mouse.scroll.ReadValue().y * 0.01f; // Normalize scroll value
             if (Mathf.Abs(scrollDelta) > 0.01f)
             {
                 targetZoom -= scrollDelta * zoomSpeed;
@@ -61,33 +66,50 @@ namespace JunkyardAutomation.Core
             Vector3 panDelta = Vector3.zero;
 
             // Keyboard pan (WASD and arrows)
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-
-            if (Mathf.Abs(horizontal) > 0.01f || Mathf.Abs(vertical) > 0.01f)
+            var keyboard = Keyboard.current;
+            if (keyboard != null)
             {
-                panDelta = new Vector3(horizontal, vertical, 0f).normalized * keyboardPanSpeed * Time.deltaTime;
+                Vector2 moveInput = Vector2.zero;
+
+                if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed)
+                    moveInput.y += 1f;
+                if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed)
+                    moveInput.y -= 1f;
+                if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed)
+                    moveInput.x += 1f;
+                if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed)
+                    moveInput.x -= 1f;
+
+                if (moveInput.sqrMagnitude > 0.01f)
+                {
+                    panDelta = new Vector3(moveInput.x, moveInput.y, 0f).normalized * keyboardPanSpeed * Time.deltaTime;
+                }
             }
 
             // Mouse drag pan (middle mouse button)
-            if (Input.GetMouseButtonDown(2))
+            var mouse = Mouse.current;
+            if (mouse != null)
             {
-                isDragging = true;
-                lastMousePosition = Input.mousePosition;
-            }
-            else if (Input.GetMouseButtonUp(2))
-            {
-                isDragging = false;
-            }
+                if (mouse.middleButton.wasPressedThisFrame)
+                {
+                    isDragging = true;
+                    lastMousePosition = mouse.position.ReadValue();
+                }
+                else if (mouse.middleButton.wasReleasedThisFrame)
+                {
+                    isDragging = false;
+                }
 
-            if (isDragging)
-            {
-                Vector3 mouseDelta = Input.mousePosition - lastMousePosition;
-                // Convert screen delta to world delta (invert for natural drag feel)
-                float worldDeltaX = -mouseDelta.x * cam.orthographicSize * 2f / Screen.height * dragPanSpeed;
-                float worldDeltaY = -mouseDelta.y * cam.orthographicSize * 2f / Screen.height * dragPanSpeed;
-                panDelta += new Vector3(worldDeltaX, worldDeltaY, 0f);
-                lastMousePosition = Input.mousePosition;
+                if (isDragging)
+                {
+                    Vector2 currentMousePos = mouse.position.ReadValue();
+                    Vector2 mouseDelta = currentMousePos - lastMousePosition;
+                    // Convert screen delta to world delta (invert for natural drag feel)
+                    float worldDeltaX = -mouseDelta.x * cam.orthographicSize * 2f / Screen.height * dragPanSpeed;
+                    float worldDeltaY = -mouseDelta.y * cam.orthographicSize * 2f / Screen.height * dragPanSpeed;
+                    panDelta += new Vector3(worldDeltaX, worldDeltaY, 0f);
+                    lastMousePosition = currentMousePos;
+                }
             }
 
             // Apply pan

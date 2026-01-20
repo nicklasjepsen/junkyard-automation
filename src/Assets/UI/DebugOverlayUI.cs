@@ -1,15 +1,17 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace JunkyardAutomation.UI
 {
     /// <summary>
     /// Debug overlay showing grid coordinates, world position, and FPS.
     /// Toggle with F3 key.
+    /// Uses Unity's new Input System.
     /// </summary>
     public class DebugOverlayUI : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField] private KeyCode toggleKey = KeyCode.F3;
+        [SerializeField] private Key toggleKey = Key.F3;
         [SerializeField] private bool showOnStart = true;
 
         [Header("Style")]
@@ -44,7 +46,8 @@ namespace JunkyardAutomation.UI
             deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 
             // Toggle visibility
-            if (Input.GetKeyDown(toggleKey))
+            var keyboard = Keyboard.current;
+            if (keyboard != null && keyboard[toggleKey].wasPressedThisFrame)
             {
                 isVisible = !isVisible;
             }
@@ -109,10 +112,12 @@ namespace JunkyardAutomation.UI
             y += lineHeight;
 
             // World position
-            if (mainCamera != null)
+            var mouse = Mouse.current;
+            if (mainCamera != null && mouse != null)
             {
+                Vector2 mousePos = mouse.position.ReadValue();
                 Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(
-                    new Vector3(Input.mousePosition.x, Input.mousePosition.y, -mainCamera.transform.position.z)
+                    new Vector3(mousePos.x, mousePos.y, -mainCamera.transform.position.z)
                 );
                 DrawLabel(padding + 5f, y, $"World: ({mouseWorld.x:F2}, {mouseWorld.y:F2})");
             }
