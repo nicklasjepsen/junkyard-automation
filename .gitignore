@@ -69,3 +69,6 @@ Thumbs.db
 
 # Local settings
 *.local.json
+
+# Purchased Asset Store packages (do not distribute)
+src/Assets/Sci Fi Factory Icons Pack*/

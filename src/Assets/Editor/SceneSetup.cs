@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using JunkyardAutomation.Core;
+using JunkyardAutomation.Data;
 using JunkyardAutomation.UI;
 using JunkyardAutomation.Placement;
 using JunkyardAutomation.Simulation;
@@ -224,6 +225,40 @@ namespace JunkyardAutomation.Editor
             }
 
             Debug.Log("[SceneSetup] ItemVisualManager created");
+
+            // 13. Create SpriteRegistry
+            GameObject spriteRegistryObj = GameObject.Find("SpriteRegistry");
+            if (spriteRegistryObj == null)
+            {
+                spriteRegistryObj = new GameObject("SpriteRegistry");
+            }
+
+            SpriteRegistry spriteRegistry = spriteRegistryObj.GetComponent<SpriteRegistry>();
+            if (spriteRegistry == null)
+            {
+                spriteRegistry = spriteRegistryObj.AddComponent<SpriteRegistry>();
+            }
+
+            // Try to find and assign SpriteDatabase
+            string[] guids = AssetDatabase.FindAssets("t:SpriteDatabase");
+            if (guids.Length > 0)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guids[0]);
+                SpriteDatabase db = AssetDatabase.LoadAssetAtPath<SpriteDatabase>(path);
+                if (db != null)
+                {
+                    SerializedObject srSO = new SerializedObject(spriteRegistry);
+                    srSO.FindProperty("spriteDatabase").objectReferenceValue = db;
+                    srSO.ApplyModifiedProperties();
+                    Debug.Log($"[SceneSetup] SpriteRegistry linked to {path}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("[SceneSetup] No SpriteDatabase found. Run Junkyard/Create Sprite Database to create one.");
+            }
+
+            Debug.Log("[SceneSetup] SpriteRegistry created");
 
             // Mark scene dirty so it can be saved
             UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(

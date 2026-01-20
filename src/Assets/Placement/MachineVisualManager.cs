@@ -63,6 +63,49 @@ namespace JunkyardAutomation.Placement
             GameObject obj = new GameObject($"Machine_{machine.MachineTypeId}_{machine.Id.Substring(0, 8)}");
             obj.transform.parent = transform;
 
+            // Try to use sprite if available
+            Sprite machineSprite = SpriteRegistry.Instance?.GetMachineSprite(machine.MachineTypeId);
+
+            if (machineSprite != null)
+            {
+                // Use sprite renderer
+                CreateSpriteVisual(obj, machine, machineSprite);
+            }
+            else
+            {
+                // Fall back to procedural mesh
+                CreateMeshVisual(obj, machine);
+            }
+
+            return obj;
+        }
+
+        private void CreateSpriteVisual(GameObject obj, PlacedMachine machine, Sprite sprite)
+        {
+            Vector3 worldPos = GridSystem.Instance.GridToWorld(machine.Position);
+            worldPos.z = -0.005f; // Render above grid
+
+            obj.transform.position = worldPos;
+
+            // For conveyors, rotate the sprite based on direction
+            if (machine.MachineTypeId == "Conveyor")
+            {
+                obj.transform.rotation = Quaternion.Euler(0, 0, machine.Rotation - 90); // Adjust for sprite orientation
+            }
+
+            SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
+            sr.sprite = sprite;
+            sr.sortingOrder = 1;
+
+            // Scale sprite to fit tile
+            float tileSize = GridSystem.Instance.TileWorldWidth;
+            float spriteSize = Mathf.Max(sprite.bounds.size.x, sprite.bounds.size.y);
+            float scale = (tileSize * 0.8f) / spriteSize; // 80% of tile size
+            obj.transform.localScale = new Vector3(scale, scale, 1f);
+        }
+
+        private void CreateMeshVisual(GameObject obj, PlacedMachine machine)
+        {
             // Add mesh components
             MeshFilter meshFilter = obj.AddComponent<MeshFilter>();
             MeshRenderer meshRenderer = obj.AddComponent<MeshRenderer>();
@@ -84,8 +127,6 @@ namespace JunkyardAutomation.Placement
             if (shader == null) shader = Shader.Find("Unlit/Color");
             Material mat = new Material(shader);
             meshRenderer.material = mat;
-
-            return obj;
         }
 
         private Mesh CreateConveyorMesh(Vector2Int position, int rotation, Color machineColor)

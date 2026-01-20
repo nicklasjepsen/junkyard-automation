@@ -84,6 +84,40 @@ namespace JunkyardAutomation.Simulation
             GameObject obj = new GameObject($"Item_{item.TypeId}_{item.Id.Substring(0, 8)}");
             obj.transform.parent = transform;
 
+            // Try to use sprite if available
+            Sprite itemSprite = SpriteRegistry.Instance?.GetItemSprite(item.TypeId);
+
+            if (itemSprite != null)
+            {
+                CreateSpriteVisual(obj, item, itemSprite);
+            }
+            else
+            {
+                CreateMeshVisual(obj, item);
+            }
+
+            // Set initial position
+            Vector3 pos = item.GetWorldPosition();
+            pos.z = -0.1f;
+            obj.transform.position = pos;
+
+            itemVisuals[item.Id] = obj;
+        }
+
+        private void CreateSpriteVisual(GameObject obj, ItemEntity item, Sprite sprite)
+        {
+            SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
+            sr.sprite = sprite;
+            sr.sortingOrder = 10; // Render above machines
+
+            // Scale sprite to fit item size
+            float spriteSize = Mathf.Max(sprite.bounds.size.x, sprite.bounds.size.y);
+            float scale = (itemSize * 1.5f) / spriteSize;
+            obj.transform.localScale = new Vector3(scale, scale, 1f);
+        }
+
+        private void CreateMeshVisual(GameObject obj, ItemEntity item)
+        {
             MeshFilter meshFilter = obj.AddComponent<MeshFilter>();
             MeshRenderer meshRenderer = obj.AddComponent<MeshRenderer>();
 
@@ -104,13 +138,6 @@ namespace JunkyardAutomation.Simulation
             if (shader == null) shader = Shader.Find("Unlit/Color");
             Material mat = new Material(shader);
             meshRenderer.material = mat;
-
-            // Set initial position
-            Vector3 pos = item.GetWorldPosition();
-            pos.z = -0.1f;
-            obj.transform.position = pos;
-
-            itemVisuals[item.Id] = obj;
         }
 
         private void RemoveVisual(string itemId)
