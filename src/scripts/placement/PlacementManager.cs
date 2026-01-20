@@ -18,10 +18,10 @@ public enum PlacementMode
 public partial class PlacementManager : Node
 {
     [Signal]
-    public delegate void ModeChangedEventHandler(PlacementMode mode);
+    public delegate void ModeChangedEventHandler(int mode);
 
     [Signal]
-    public delegate void MachinePlacedEventHandler(PlacedMachine machine);
+    public delegate void MachinePlacedEventHandler(string machineId);
 
     [Signal]
     public delegate void MachineDemolishedEventHandler(string machineId);
@@ -188,7 +188,7 @@ public partial class PlacementManager : Node
         CreateMachineVisual(machine);
 
         GD.Print($"Placed {machine.TypeId} at {gridPos} with rotation {CurrentRotation}");
-        EmitSignal(SignalName.MachinePlaced, machine);
+        EmitSignal(SignalName.MachinePlaced, machine.Id);
     }
 
     private void TryDemolishMachine(Vector2I gridPos)

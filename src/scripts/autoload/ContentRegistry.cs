@@ -184,13 +184,13 @@ public partial class ContentRegistry : Node
 
     private static Variant LoadJsonFile(string path)
     {
-        if (!FileAccess.FileExists(path))
+        if (!Godot.FileAccess.FileExists(path))
         {
             GD.PushWarning($"JSON file not found: {path}");
             return new Variant();
         }
 
-        using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+        using var file = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read);
         if (file == null)
         {
             GD.PushError($"Failed to open file: {path}");
